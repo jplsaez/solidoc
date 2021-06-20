@@ -1,4 +1,16 @@
 const fs = require('fs')
+const path = require('path')
+
+const fixLinks = (config, contents) => {
+  const { pathToRoot, outputPath } = config
+  const toDocs = path.relative(pathToRoot, outputPath)
+  const toRoot = path.relative(outputPath, pathToRoot)
+
+  contents = contents.replace(/\[(.*?)\]\((.*md?)\)/gi, `[$1](${toDocs}/$2)`)
+  contents = contents.replace(/\[(.*?)\]\((.*sol?)\)/gi, (_x, y, z) => `[${y}](${z.replace(toRoot, '')})`)
+
+  return contents
+}
 
 const removePrevious = (contents) => {
   return contents.replace(/\[comment\]: #solidoc \(Start\).*\[comment\]: #solidoc \(End\)/gms, '{{{doc}}}')
@@ -9,16 +21,20 @@ const insertRoot = (contents, replacable) => {
   return contents.replace(/{{{doc}}}/g, toReplace)
 }
 
-const set = (replacable, readmeFile) => {
-  if (!fs.existsSync(readmeFile)) {
+const set = (replacable, config) => {
+  const { readMe } = config
+
+  if (!fs.existsSync(readMe)) {
     return
   }
 
-  let contents = fs.readFileSync(readmeFile).toString()
+  replacable = fixLinks(config, replacable)
+
+  let contents = fs.readFileSync(readMe).toString()
 
   contents = removePrevious(contents)
   contents = insertRoot(contents, replacable)
-  fs.writeFileSync(readmeFile, contents)
+  fs.writeFileSync(readMe, contents)
 }
 
 module.exports = { set }

@@ -73,7 +73,7 @@ if (!fs.existsSync(config.pathToRoot)) {
 
 const generateReadMe = (contract, contents) => {
   if(contract.contractName === config.rootContract) {
-    readMe.set(contents, config.readMe)
+    readMe.set(contents, config)
   }
 }
 
