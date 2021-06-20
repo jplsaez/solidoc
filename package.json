@@ -1,13 +1,13 @@
 {
-  "name": "solidoc",
+  "name": "solidoc2",
   "version": "1.0.4",
-  "description": "Solidity Documentation Generator",
+  "description": "Solidity Documentation Generator 2",
   "main": "cli.js",
   "scripts": {
     "start": "node cli.js ../openzeppelin-solidity ../openzeppelin-solidity/docs false"
   },
   "bin": {
-    "solidoc": "cli.js"
+    "solidoc2": "cli.js"
   },
   "keywords": [
     "solidity",
@@ -31,12 +31,12 @@
     "ubiq",
     "monax"
   ],
-  "author": "Binod Nirvan",
+  "author": "Neptune Mutual",
   "license": "Apache-2.0",
-  "homepage": "https://github.com/CYBRToken/solidoc",
+  "homepage": "https://github.com/neptune-mutual/solidoc",
   "repository": {
     "type": "git",
-    "url": "https://github.com/CYBRToken/solidoc"
+    "url": "https://github.com/neptune-mutual/solidoc"
   },
   "dependencies": {
     "fs-extra": "^7.0.0",

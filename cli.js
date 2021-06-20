@@ -79,7 +79,7 @@ const generateReadMe = (contract, contents) => {
 
 function begin () {
   if (!fs.existsSync(buildDirectory)) {
-    logger.error('Please build your project first or run solidoc with recompilation on.')
+    logger.error('Please build your project first or run solidoc2 with recompilation on.')
     return
   }
 
