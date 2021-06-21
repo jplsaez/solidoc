@@ -1,6 +1,6 @@
 {
   "name": "solidoc2",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Solidity Documentation Generator 2",
   "main": "cli.js",
   "scripts": {

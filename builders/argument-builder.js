@@ -1,5 +1,7 @@
 const helper = require('../helpers/documentation-helper')
 
+const escapeCellLineBreaks = x => x.replace('\n', '<br />')
+
 const build = (node, params) => {
   if (!params || !params.length) {
     return ''
@@ -15,7 +17,7 @@ const build = (node, params) => {
     builder.push(parameter.typeDescriptions.typeString.replace('contract ', ''))
     builder.push(' | ')
     const doc = helper.get(node, 'param ' + parameter.name)
-    builder.push(doc)
+    builder.push(escapeCellLineBreaks(doc))
     builder.push(' | ')
     builder.push('\n')
   }

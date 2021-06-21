@@ -39,7 +39,7 @@ const serialize = (contract, template, contracts) => {
       parameterList.push(`${dataType} ${argumentName}`)
     }
 
-    return `- [${x.name}(${parameterList.join(', ')})](#${x.name.toLowerCase()})`
+    return `- [${x.name || 'constructor'}(${parameterList.join(', ')})](#${x.name.toLowerCase()})`
   }).toArray()
 
   template = template.replace('{{FunctionTitle}}', i18n.translate('Functions'))
