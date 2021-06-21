@@ -88,8 +88,6 @@ You can also override language literals by copying and editing `i18n` files on t
 
 
 
-## Before You Try
+## Example Documentation
 
-- [OpenZeppelin Solidity Documentation](https://github.com/binodnp/openzeppelin-solidity/blob/master/docs/ERC721.md)
-- [Open Source Vesting Schedule by Binod](https://github.com/binodnp/vesting-schedule/blob/master/docs/VestingSchedule.md)
-- [Neptune Mutual Protocol Documentation](https://github.com/neptune-mutual/protocol)
+[Neptune Mutual Protocol Documentation](https://github.com/neptune-mutual/protocol)
