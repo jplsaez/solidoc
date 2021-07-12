@@ -1,7 +1,6 @@
 const documentationHelper = require('../helpers/documentation-helper')
 const enumerable = require('linq')
 const nodeHelper = require('../helpers/node-helper')
-const i18n = require('../i18n')
 
 const getReturnParameters = (node) => {
   const builder = []
@@ -35,6 +34,7 @@ const build = (node) => {
 
   const builder = []
 
+  builder.push('```solidity')
   const parameters = node.parameters.parameters || []
   const documentation = node.documentation
 
@@ -52,7 +52,6 @@ const build = (node) => {
     parameterList.push(`${dataType} ${argumentName}`)
   }
 
-  builder.push('```js')
   builder.push('\n')
   builder.push(`function ${node.name}(`)
 
@@ -83,12 +82,6 @@ const build = (node) => {
   }
 
   builder.push('\n')
-  builder.push('\n')
-
-  builder.push(`**${i18n.translate('Returns')}**`)
-  builder.push('\n')
-  builder.push('\n')
-  builder.push(returnDocumentation)
   builder.push('\n')
 
   return builder.join('')

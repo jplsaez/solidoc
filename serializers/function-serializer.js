@@ -2,7 +2,7 @@ const nodeHelper = require('../helpers/node-helper')
 const enumerable = require('linq')
 const templateHelper = require('../helpers/template-helper')
 const documentationHelper = require('../helpers/documentation-helper')
-const codeBuilder = require('../builders/function-code-builder')
+const signatureBuilder = require('../builders/function-signature-builder')
 const superBuilder = require('../builders/super-builder')
 const referenceBuilder = require('../builders/function-reference-builder')
 const argumentBuilder = require('../builders/argument-builder')
@@ -14,6 +14,29 @@ const cleaned = (template) => {
   template = template.replace('{{AllFunctions}}', '')
 
   return template
+}
+
+const getCode = (node, contract) => {
+  const src = node?.src
+  if (!src) {
+    return
+  }
+
+  const [start, length] = src.split(':')
+  const body = contract.source.substr(start, length)
+
+  const builder = []
+  builder.push('<details>')
+  builder.push('\t<summary><strong>Source Code</strong></summary>')
+  builder.push('')
+  builder.push('```javascript')
+  builder.push(body)
+  builder.push('```')
+
+  builder.push('</details>')
+  builder.push('')
+
+  return builder.join('\n')
 }
 
 const serialize = (contract, template, contracts) => {
@@ -49,7 +72,7 @@ const serialize = (contract, template, contracts) => {
 
     let functionTemplate = templateHelper.FunctionTemplate
     const description = documentationHelper.getNotice(node.documentation)
-    const functionCode = codeBuilder.build(node)
+    const signature = signatureBuilder.build(node)
     const base = superBuilder.build(node, contracts)
     const references = referenceBuilder.build(node, contracts)
     const parameters = (node.parameters || {}).parameters
@@ -61,11 +84,13 @@ const serialize = (contract, template, contracts) => {
     functionTemplate = functionTemplate.replace('{{Super}}', base)
     functionTemplate = functionTemplate.replace('{{References}}', references)
     functionTemplate = functionTemplate.replace('{{FunctionDescription}}', description)
-    functionTemplate = functionTemplate.replace('{{FunctionCode}}', functionCode)
+    functionTemplate = functionTemplate.replace('{{FunctionCode}}', signature)
     functionTemplate = functionTemplate.replace('{{FunctionArguments}}', args)
 
     functionTemplate = functionTemplate.replace('{{TableHeader}}', parameters ? templateHelper.TableHeaderTemplate : '')
     functionTemplate = functionTemplate.replace('{{FunctionArgumentsHeading}}', parameters ? `**${i18n.translate('Arguments')}**` : '')
+
+    functionTemplate = functionTemplate.replace('{{FunctionBody}}', getCode(node, contract))
 
     definitionList.push(functionTemplate)
   }

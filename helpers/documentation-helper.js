@@ -1,6 +1,10 @@
 const getText = (x) => typeof (x) === 'object' ? x.text : x || ''
 
 const get = (contents, key) => {
+  if (!contents) {
+    return ''
+  }
+
   const text = getText(contents)
 
   const members = text.split('@')
