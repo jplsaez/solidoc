@@ -35,8 +35,8 @@ const getAbi = (contract) => {
 const getContractPath = (contract) => {
   const sourcePath = contract.sourcePath
   const relation = relative(global.config.outputPath, global.config.pathToRoot)
-  const file = sourcePath.replace(global.config.pathToRoot, '')
-  const link = `[${file.replace(/^\/|\/$/g, '')}](${path.join(relation, file)})`
+  const file = sourcePath.replace(global.config.pathToRoot, '')  
+  const link = `[${contract.contractName}.sol](${path.join(relation, file).replace(/\\/g, "/")})`																								 
 
   return util.format(i18n.translate('ViewSource'), link)
 }
@@ -54,13 +54,22 @@ const getAnchors = (contracts) => {
   return anchors
 }
 
-const getInheritancePath = (contract) => {
+const getInheritancePath = (contract, contracts) => {
   const dependencyList = []
   const dependencies = nodeHelper.getBaseContracts(contract)
 
   for (const i in dependencies) {
+	var match = false;
     const dependency = dependencies[i]
-    dependencyList.push(`[${dependency.baseName.name}](${dependency.baseName.name}.md)`)
+	for (let j = 0; j < contracts.length; j++) {
+		 if(contracts[j].contractName===dependency.baseName.name) {			
+			dependencyList.push(`[${dependency.baseName.name}](${dependency.baseName.name}.md)`)
+			match = true;
+			break;
+		 }
+	}
+	if(!match)
+		dependencyList.push(`${dependency.baseName.name}`)	    										  
   }
 
   if (dependencyList && dependencyList.length) {
@@ -96,7 +105,7 @@ const serialize = (contract, template, contracts) => {
   template = template.replace('{{ContractPath}}', getContractPath(contract))
   template = template.replace('{{ContractTitle}}', getTitle(contract))
   template = template.replace('{{ContractDescription}}', notice)
-  template = template.replace('{{ContractInheritancePath}}', getInheritancePath(contract))
+  template = template.replace('{{ContractInheritancePath}}', getInheritancePath(contract, contracts))
   template = template.replace('{{ContractImplementations}}', getImplementation(contract, contracts))
 
   template = template.replace('{{AllContractsAnchor}}', getAnchors(contracts).join('\n'))

@@ -1,5 +1,6 @@
 # {{ContractTitle}}
 
+{{ContractDescription}}					   
 {{ContractPath}}
 
 {{ContractInheritancePath}}
@@ -7,10 +8,10 @@
 
 
 
-**{{ContractName}}**
 
 
-{{ContractDescription}}
+
+
 
 
 {{ConstructorHeading}}

@@ -12,7 +12,6 @@
 
 {{FunctionArgumentsHeading}}
 
-{{TableHeader}}
-{{FunctionArguments}}
+{{TableHeader}}{{FunctionArguments}}
 
 {{FunctionBody}}

@@ -1,6 +1,7 @@
 const path = require('path')
 const fs = require('fs-extra')
 
+
 function read (fileName) {
   function getPath () {
     const file = path.join(__dirname, '..', 'templates', fileName)

@@ -1,9 +1,8 @@
 {
-  "pathToRoot": "../protocol",
-  "outputPath": "../protocol/docs",
-  "noCompilation": true,
+  "pathToRoot": "./",
+  "outputPath": "./docs",
+  "noCompilation": false,
   "compiler": "truffle compile",
-  "language": "en",
-  "rootContract": "Cover",
-  "readMe": "../protocol/readme.md"
+  "language": "en",  
+  "includedContracts": "ContractName1, ContractName2"														   
 }

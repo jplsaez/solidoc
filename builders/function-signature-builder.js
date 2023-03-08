@@ -17,7 +17,7 @@ const getReturnParameters = (node) => {
 
   for (const i in returnParameters) {
     const parameter = returnParameters[i]
-    returnList.push(`${parameter.name} ${parameter.typeDescriptions.typeString}`.trim())
+    returnList.push(`${parameter.typeDescriptions.typeString} ${parameter.name}`.trim())
   }
 
   builder.push(returnList.join(', '))
@@ -27,14 +27,14 @@ const getReturnParameters = (node) => {
   return builder.join('')
 }
 
-const build = (node) => {
+const build = (node, functionName) => {
   if (!node || !node.parameters) {
     return ''
   }
 
   const builder = []
 
-  builder.push('```solidity')
+  builder.push('```js')
   const parameters = node.parameters.parameters || []
   const documentation = node.documentation
 
@@ -53,7 +53,7 @@ const build = (node) => {
   }
 
   builder.push('\n')
-  builder.push(`function ${node.name}(`)
+  builder.push(`${functionName}(`)
 
   builder.push(parameterList.join(', '))
 

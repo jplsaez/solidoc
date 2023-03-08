@@ -1,13 +1,13 @@
 {
-  "name": "solidoc2",
-  "version": "1.0.8",
+  "name": "solidoc",
+  "version": "1.0.0",
   "description": "Solidity Documentation Generator 2",
   "main": "cli.js",
   "scripts": {
     "start": "node cli.js ../openzeppelin-solidity ../openzeppelin-solidity/docs false"
   },
   "bin": {
-    "solidoc2": "cli.js"
+    "solidoc": "cli.js"
   },
   "keywords": [
     "solidity",
@@ -31,12 +31,12 @@
     "ubiq",
     "monax"
   ],
-  "author": "Neptune Mutual",
+  "author": "Juan Pedro Lopez",
   "license": "Apache-2.0",
-  "homepage": "https://github.com/neptune-mutual/solidoc",
+  "homepage": "https://github.com/jplsaez/solidoc",
   "repository": {
     "type": "git",
-    "url": "https://github.com/neptune-mutual/solidoc"
+    "url": "https://github.com/jplsaez/solidoc"
   },
   "dependencies": {
     "fs-extra": "^7.0.0",

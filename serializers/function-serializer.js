@@ -23,7 +23,7 @@ const getCode = (node, contract) => {
   }
 
   const [start, length] = src.split(':')
-  const body = contract.source.substr(start, length)
+  const body = contract.source.substr(start, length).replace(/[\r\n]\s*[\r\n]/g, '\n')
 
   const builder = []
   builder.push('<details>')
@@ -37,6 +37,31 @@ const getCode = (node, contract) => {
   builder.push('')
 
   return builder.join('\n')
+}
+
+const filterName = (node) => {
+	
+	var _nodeName = node.name;
+	var _functionName = `function ${_nodeName}`
+
+	if(node.kind) {
+		switch (node.kind) {
+			case 'constructor': 
+				  _nodeName = 'constructor';
+				  _functionName = _nodeName;
+				  break;
+			case 'receive':
+				_nodeName = 'receive';
+				_functionName = _nodeName;
+				break;
+			case 'fallback':
+				_nodeName = 'fallback';
+				_functionName = _nodeName;
+				break;
+		}
+	}		
+	
+	return { nodeName: _nodeName, functionName: _functionName }
 }
 
 const serialize = (contract, template, contracts) => {
@@ -62,42 +87,50 @@ const serialize = (contract, template, contracts) => {
       parameterList.push(`${dataType} ${argumentName}`)
     }
 
-    return `- [${x.name || 'constructor'}(${parameterList.join(', ')})](#${x.name.toLowerCase()})`
+	filteredName = filterName(x) 
+
+    return `- [${filteredName.nodeName}(${parameterList.join(', ')})](#${filteredName.nodeName.toLowerCase()})`
   }).toArray()
 
-  template = template.replace('{{FunctionTitle}}', i18n.translate('Functions'))
+  template = template.replace('{{FunctionTitle}}', i18n.translate('Functions'))  
 
   for (const i in functionNodes) {
     const node = functionNodes[i]
 
+	filteredName = filterName(node) 	
+
     let functionTemplate = templateHelper.FunctionTemplate
     const description = documentationHelper.getNotice(node.documentation)
-    const signature = signatureBuilder.build(node)
+    const signature = signatureBuilder.build(node, filteredName.functionName)
     const base = superBuilder.build(node, contracts)
     const references = referenceBuilder.build(node, contracts)
     const parameters = (node.parameters || {}).parameters
-    const args = argumentBuilder.build(node.documentation, parameters)
+	const returnParameters = (node.returnParameters || {}).parameters
+	
+    const args = argumentBuilder.build(node.documentation, parameters, returnParameters)
 
-    functionTemplate = functionTemplate.replace('{{FunctionName}}', node.name)
-    functionTemplate = functionTemplate.replace('{{FQFunctionName}}', `${contract.contractName}.${node.name}`)
-    functionTemplate = functionTemplate.replace('{{FunctionNameHeading}}', `### ${node.name}`)
+	
+
+    functionTemplate = functionTemplate.replace('{{FunctionName}}', filteredName.nodeName)
+    functionTemplate = functionTemplate.replace('{{FQFunctionName}}', `${contract.contractName}.${filteredName.nodeName}`)
+    functionTemplate = functionTemplate.replace('{{FunctionNameHeading}}', `### ${filteredName.nodeName}`)
     functionTemplate = functionTemplate.replace('{{Super}}', base)
     functionTemplate = functionTemplate.replace('{{References}}', references)
     functionTemplate = functionTemplate.replace('{{FunctionDescription}}', description)
     functionTemplate = functionTemplate.replace('{{FunctionCode}}', signature)
     functionTemplate = functionTemplate.replace('{{FunctionArguments}}', args)
 
-    functionTemplate = functionTemplate.replace('{{TableHeader}}', parameters ? templateHelper.TableHeaderTemplate : '')
-    functionTemplate = functionTemplate.replace('{{FunctionArgumentsHeading}}', parameters ? `**${i18n.translate('Arguments')}**` : '')
+    functionTemplate = functionTemplate.replace('{{TableHeader}}', parameters && parameters.length ? templateHelper.TableHeaderTemplate.replace(/[\r\n]\s*[\r\n]/g, '\n') : '')	
+    functionTemplate = functionTemplate.replace('{{FunctionArgumentsHeading}}', parameters && parameters.length ? `**${i18n.translate('Arguments')}**` : '')
 
     functionTemplate = functionTemplate.replace('{{FunctionBody}}', getCode(node, contract))
-
+	
     definitionList.push(functionTemplate)
   }
 
   template = template.replace('{{FunctionList}}', functionList.join('\n'))
   template = template.replace('{{AllFunctions}}', definitionList.join('\n'))
-
+  
   return template
 }
 

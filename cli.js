@@ -8,7 +8,6 @@ const compiler = require('./utils/compiler')
 const pino = require('pino')
 const parser = require('./parser')
 const generator = require('./generator')
-const readMe = require('./helpers/readme-helper')
 
 const logger = pino({
   prettyPrint: true
@@ -32,6 +31,7 @@ function getConfig () {
     const contents = fs.readFileSync(file)
     const config = JSON.parse(contents.toString())
 
+	logger.info('Parsed config file: '+config)										   
     return config
   };
 
@@ -71,12 +71,6 @@ if (!fs.existsSync(config.pathToRoot)) {
   return
 }
 
-const generateReadMe = (contract, contents) => {
-  if(contract.contractName === config.rootContract) {
-    readMe.set(contents, config)
-  }
-}
-
 function begin () {
   if (!fs.existsSync(buildDirectory)) {
     logger.error('Please build your project first or run solidoc2 with recompilation on.')
@@ -87,9 +81,9 @@ function begin () {
     logger.info('Create the directory for the output path: %s.')
     fs.mkdirSync(config.outputPath)
   }
-
-  const contracts = parser.parse(buildDirectory)
-  generator.serialize(contracts, config.outputPath, generateReadMe)
+  
+  const contracts = parser.parse(buildDirectory, config.includedContracts)  
+  generator.serialize(contracts, config.outputPath)
 }
 
 if (!config.noCompilation) {

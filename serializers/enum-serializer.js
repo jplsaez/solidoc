@@ -12,7 +12,7 @@ const serialize = (contract, template, _contracts) => {
     return template.replace('{{Enumerators}}', '')
   }
 
-  builder.push(`**${i18n.translate('Enums')}**`)
+  builder.push(`## ${i18n.translate('Enums')}`)
   builder.push('\n')
 
   for (const i in nodes) {

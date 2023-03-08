@@ -2,10 +2,7 @@ const helper = require('../helpers/documentation-helper')
 const escapeCellLineBreaks = x => x.replace(/(?:\r\n|\r|\n)/g, ' ')
 const i18n = require('../i18n')
 
-const build = (node, params) => {
-  if (!params || !params.length) {
-    return ''
-  }
+const build = (node, params, returnParameters) => {	
 
   const builder = []
 
@@ -23,16 +20,28 @@ const build = (node, params) => {
     builder.push('\n')
   }
 
-  const returnDocumentation = helper.get(node, 'return')
-
-  if (returnDocumentation) {
-    builder.push('\n')
-    builder.push(`**${i18n.translate('Returns')}**`)
-    builder.push('\n')
-    builder.push('\n')
-    builder.push(returnDocumentation)
-    builder.push('\n')
+  if(returnParameters && returnParameters.length) {	
+	  builder.push('\n')
+	  builder.push(`**${i18n.translate('Returns')}**`)
+	  builder.push('\n')
+	  builder.push('\n')
   }
+
+  for (const i in returnParameters) {
+    const returnParameter = returnParameters[i]
+	
+	const returnDocumentation = helper.get(node, 'return ' + returnParameter.name)
+	
+	builder.push('- ' + returnParameter.name + ': ');
+	
+	if (returnDocumentation) {		
+		builder.push(returnDocumentation)		
+    }
+	
+	builder.push('\n')
+	builder.push('\n')
+    
+  }	  
 
   return builder.join('')
 }
