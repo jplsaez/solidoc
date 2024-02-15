@@ -25,4 +25,4 @@ const getNotice = (contents) => {
   return title || get(contents, 'dev')
 }
 
-module.exports = { get, getNotice }
+module.exports = { get, getNotice, getText }

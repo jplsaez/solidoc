@@ -38,6 +38,8 @@ function getConfig () {
   const config = readConfig()
   const args = process.argv
 
+  
+
   if (args.length > 6) {
     logger.error(`Invalid command ${process.argv.join(' ')}`)
     return
@@ -49,6 +51,8 @@ function getConfig () {
     config.noCompilation = (args[4] || '').toLowerCase().startsWith('t')
     config.language = args[5] || 'en'
   }
+
+   
 
   config.pathToRoot = resolve(config.pathToRoot)
   config.outputPath = resolve(config.outputPath)
@@ -86,6 +90,7 @@ function begin () {
   generator.serialize(contracts, config.outputPath)
 }
 
+/*
 if (!config.noCompilation) {
   fs.removeSync(buildDirectory)
 
@@ -93,5 +98,6 @@ if (!config.noCompilation) {
   compiler.compile(config.pathToRoot, begin)
   return
 }
+*/
 
 begin()

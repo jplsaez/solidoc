@@ -1,8 +1,7 @@
 {
-  "pathToRoot": "./",
-  "outputPath": "./docs",
-  "noCompilation": false,
-  "compiler": "truffle compile",
+  "pathToRoot": "D:/jplsa/Documents/projects/bcprojects",
+  "outputPath": "D:/jplsa/Documents/projects/bcprojects/docs",  
   "language": "en",  
-  "includedContracts": "ContractName1, ContractName2"														   
+  "includedContracts": "CryptoTaskManager, ICryptoTaskFactory, CryptoTaskFactoryV100, CryptoTaskFactoryWrapperV100, ICryptoTask, CryptoTaskV100, CryptoTaskLibraryV100, TokenManagerLibraryV100"														   
 }
+

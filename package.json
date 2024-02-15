@@ -44,7 +44,8 @@
     "linq": "^3.1.0",
     "pino": "^5.8.0",
     "pino-pretty": "^2.2.2",
-    "require-all": "^3.0.0"
+    "require-all": "^3.0.0",
+    "truffle": "^5.11.5"
   },
   "devDependencies": {
     "standard": "^16.0.3"
