@@ -1,7 +1,7 @@
 {
-  "pathToRoot": "D:/jplsa/Documents/projects/bcprojects",
-  "outputPath": "D:/jplsa/Documents/projects/bcprojects/docs",  
+  "pathToRoot": "./",
+  "outputPath": "./docs",  
   "language": "en",  
-  "includedContracts": "CryptoTaskManager, ICryptoTaskFactory, CryptoTaskFactoryV100, CryptoTaskFactoryWrapperV100, ICryptoTask, CryptoTaskV100, CryptoTaskLibraryV100, TokenManagerLibraryV100"														   
+  "includedContracts": "Contract1, Contract2"														   
 }
 
