@@ -21,8 +21,9 @@ const get = (contents, key) => {
 }
 
 const getNotice = (contents) => {
-  const title = get(contents, 'notice')
-  return title || get(contents, 'dev')
+  //const title = get(contents, 'notice')
+  //return title || get(contents, 'dev')
+  return get(contents, 'dev')
 }
 
 module.exports = { get, getNotice, getText }

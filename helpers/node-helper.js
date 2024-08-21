@@ -2,6 +2,7 @@
 const { findOverriddenNodesById, getBaseContracts, getContractNode, getMembers } = require('../node_utils/contract')
 const { getConstructorNode } = require('../node_utils/constructor')
 const { getEnumerators } = require('../node_utils/enum')
+const { getErrors } = require('../node_utils/error')
 const { getEvents } = require('../node_utils/event')
 const { getFunctions } = require('../node_utils/function')
 const { getImplementations } = require('../node_utils/implementation')
@@ -17,6 +18,7 @@ module.exports = {
   getConstructorNode,
   getContractNode,
   getEnumerators,
+  getErrors,
   getEvents,
   getFunctions,
   getImplementations,

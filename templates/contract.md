@@ -36,6 +36,8 @@
 
 {{Events}}
 
+{{Errors}}
+
 {{TableHeader}}
 {{ConstructorArguments}}
 
