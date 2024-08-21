@@ -11,9 +11,7 @@ const build = (nodes) => {
   builder.push(`## ${i18n.translate('Events')}`)
   builder.push('\n')
   builder.push('\n')
-  //builder.push('```js')
-  //builder.push('\n')
-
+  
   for (const i in nodes) {
    
     const node = nodes[i]

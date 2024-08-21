@@ -4,13 +4,7 @@ const getEnumerators = (contract) => {
   let enums = []
 
   const nodes = contract.ast.nodes
-
-  /*
-  const nodes = enumerable.from(contract.ast.nodes).where(function (x) {
-    return x.nodes
-  }).toArray()
-  */
-
+  
   for (let i = 0; i < nodes.length; i++) {
     const node = nodes[i]
 

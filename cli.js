@@ -19,6 +19,7 @@ const logger = pino({
     2. Path to generate documentation to.
     3. Do not recompile. Optional, default: false.
     4. Language. Optional, default: en.
+    Default values are fetched from "solidoc.json" configuration file
 *************************************************************************************************/
 function getConfig () {
   function readConfig () {
