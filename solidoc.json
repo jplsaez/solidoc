@@ -1,7 +1,6 @@
 {
   "pathToRoot": "./",
-  "outputPath": "./docs",  
-  "language": "en",  
+  "outputPath": "./docs", 
   "includedContracts": "Contract1, Contract2"														   
 }
 

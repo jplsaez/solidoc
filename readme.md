@@ -1,75 +1,52 @@
 # Solidoc: Documentation Generator for Solidity
 
-This command-line utility creates markdown-based documentation for your Solidity project(s) for the following platforms:
-
-* Ethereum
-* Ethereum Classic
-* Tron
-* Qtum
-* Wanchain
-* Aeternity
-* Counterparty
-* Rootstock
-* Ubiq
-* Monax
-
+This command-line utility creates markdown-based documentation for your Solidity project(s)
 
 ## Getting Started
 
 ```npm
-npm install @jplsaez/solidoc
+npm install @jplsaez/solidoc --save-dev
+```
+
+```yarn
+yarn add --dev @jplsaez/solidoc
 ```
 
 **How to Use Solidoc?**
 
-Create `solidoc.json` configuration file in your project root.
+Create `solidoc.json` configuration file in your project root with the following properties:
+
+ - pathToRoot: root path to find the "contracts" directory with the smart contracts souce code.
+ - outputPath: path to store the generated documentation.
+ - includedContracts: comma separated list of smart contracts to generate documentation. 
 
 ```json
 {
-  "pathToRoot": "./",
+  "pathToRoot": "./",  
   "outputPath": "./docs",
-  "noCompilation": false,
-  "compiler": "truffle compile",
-  "language": "en",  
   "includedContracts": "ContractName1, ContractName2"	
 }
 ```
 
-and then call 
+Compile your contracts with Truffle. That way compiled json files will be created including AST sections (abstract syntax tree) used by solidoc to generate documentation. Note that `@author` NatSpec tag should not be used in the smart contracts source code to prevent errors in the generated AST sections. 
+
+Finally call solidoc:
 
 ```npm
-solidoc
-```
-This will generate documentation to the `docs` directory.
-
-**Another option**: edit package.json
-
-```json
-  "scripts": {
-    "docgen": "solidoc"
-  }
+npx solidoc
 ```
 
-and run
-
-```npm
-npm run docgen
+```yarn
+yarn solidoc
 ```
 
-**Note**
-
-Do not use recompilation (third argument) if you are using this on a non truffle project.
+This will generate documentation to the `outputPath` directory.
 
 
 ## Overrides
 
-If you wish to change bits and pieces of the documentation generated, place `solidoc templates` on the following directory:
+If you wish to change bits and pieces of the documentation generated, edit `solidoc templates` on the following directory:
 
 `solidoc/templates/`
 
-[Solidoc Templates](templates)
 
-
-You can also override language literals by copying and editing `i18n` files on the following path:
-
-`solidoc/i18n/`
